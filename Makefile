@@ -61,7 +61,7 @@ deps-test: stage
 	wget "https://github.com/shinesolutions/aem-helloworld-custom-image-provisioner/releases/download/${aem_helloworld_custom_image_provisioner_version}/aem-helloworld-custom-image-provisioner-${aem_helloworld_custom_image_provisioner_version}.tar.gz" \
 	  -O stage/custom/aem-custom-image-provisioner.tar.gz
 	rm -rf stage/aem-helloworld-config/ stage/user-config/*
-	cd stage && git clone https://github.com/shinesolutions/aem-helloworld-config
+	cd stage && git clone https://github.com/mbloch19868/aem-helloworld-config
 	cp -R stage/aem-helloworld-config/packer-aem/* stage/user-config/
 
 # resolve test dependencies from local directories
