@@ -49,7 +49,7 @@ describe service('aem-author') do
   it { should_not be_running }
 end
 
-describe command("keytool -list -keystore '#{aem_base}/aem/author/crx-quickstart/ssl/aem.ks' -alias cqse -storepass #{aem_keystore_password}") do
+describe command("keytool -alias cqse -storepass #{aem_keystore_password} -list -keystore '#{aem_base}/aem/author/crx-quickstart/ssl/aem.ks'") do
   its('exit_status') { should eq 0 }
   its('stderr') { should eq '' }
   its('stdout') { should contain 'cqse' }
