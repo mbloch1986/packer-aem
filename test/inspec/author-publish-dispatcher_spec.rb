@@ -119,7 +119,7 @@ end
 describe command("keytool -list -keystore '#{aem_base}/aem/publish/crx-quickstart/ssl/aem.ks' -alias cqse -storepass #{aem_keystore_password}") do
   its('exit_status') { should eq 0 }
   its('stderr') { should eq '' }
-  its('stdout') { should eq '' }
+  its('stdout') { should contain 'cqse' }
 end
 
 if File.file?('/lib/systemd/system/aem-publish.service')
