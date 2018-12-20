@@ -10,7 +10,7 @@ aem_base ||= '/opt'
 aem_port = @hiera.lookup('author::aem_port', nil, @scope)
 aem_port ||= '4502'
 
-# aem_keystore_password = @hiera.lookup('aem_curator::install_author::aem_keystore_password', nil, @scope)
+aem_keystore_password = @hiera.lookup('aem_curator::install_author::aem_keystore_password', nil, @scope)
 
 describe file("#{aem_base}/aem") do
   it { should be_directory }
@@ -49,9 +49,11 @@ describe service('aem-author') do
   it { should_not be_running }
 end
 
-# describe command("keytool -list -keystore #{aem_base}/aem/author/crx-quickstart/ssl/aem.ks -alias cqse -storepass #{aem_keystore_password}") do
-#   its('exit_status') { should eq 0 }
-# end
+describe command("keytool -list -keystore #{aem_base}/aem/author/crx-quickstart/ssl/aem.ks -alias cqse -storepass #{aem_keystore_password}") do
+  its('exit_status') { should eq 0 }
+  its('stderr') { should eq '' }
+  its('stdout') { should eq '' }
+end
 
 if File.file?('/lib/systemd/system/aem-author.service')
 
