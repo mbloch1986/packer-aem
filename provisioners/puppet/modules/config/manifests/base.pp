@@ -6,12 +6,7 @@
 #
 # [*tmp_dir*]
 #   A temporary directory used for staging
-#
-# [*python_package*]
-# [*python_pip_package*]
-# [*python_cheetah_package*]
-#   System package manager names for the Python, pip and cheetah packages.
-#
+
 # [*rhn_register*]
 #   Boolean that determines whether the instance should be registered with the RedHat Network.
 #
@@ -57,7 +52,7 @@
 #   No proxy setting should cloudwatch logs need to communicate via a proxy
 #   Default value: undef
 #
-# [*os_package_manager_packages*]
+# [*package_manager_packages*]
 #   List of packages which should be installed with OS default package manager.
 #
 #
@@ -71,10 +66,6 @@
 #
 class config::base (
   $tmp_dir,
-  $os_package_manager_packages,
-  $python_package,
-  $python_pip_package,
-  $python_cheetah_package,
   $awslogs_service_name,
   $awslogs_proxy_path,
   $base_dir = '/opt/shinesolutions',
@@ -91,6 +82,7 @@ class config::base (
   $http_proxy = undef,
   $https_proxy = undef,
   $no_proxy = undef,
+  $package_manager_packages = {},
 ){
   require ::config
 
@@ -127,34 +119,9 @@ class config::base (
     line => 'Defaults    env_keep += "ftp_proxy http_proxy https_proxy no_proxy"',
   }
 
-  package { $os_package_manager_packages:
-    ensure => installed,
-  }
-
-  package { [ $python_package, $python_pip_package, $python_cheetah_package ]:
-    ensure => latest,
-  }
-
-  package { [ 'requests', 'retrying', 'sh' ]:
-    ensure   => latest,
-    provider => 'pip',
-  }
-
-  if $install_aws_cli {
-    package { 'awscli':
-      ensure   => '1.16.10',
-      provider => 'pip',
-    }
-  }
-  # allow awscli to control boto version if it's enabled, otherwise install
-  package { 'boto':
-    ensure   => present,
-    provider => 'pip',
-  }
-
-  package { 'boto3':
-    ensure   => '1.8.5',
-    provider => 'pip',
+  # Package installation
+  config::package_installation {"Config base package installation":
+    package_manager_packages => $package_manager_packages,
   }
 
   if $install_cloudwatchlogs {

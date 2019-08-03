@@ -27,14 +27,13 @@ config::package_manager_packages:
     version: 1.51.6
     provider: puppet_gem
 
-config::base::os_package_manager_packages:
-  - bind-utils
-  - unzip
-  - jq
-
-config::base::python_package: python
-config::base::python_pip_package: python2-pip
-config::base::python_cheetah_package: python-cheetah
+config::base:package_manager_packages:
+  - name: bind-utils
+  - name: unzip
+  - name: jq
+  - name: python
+  - name: python2-pip
+  - name: python-cheetah
 
 config::base::install_collectd: true
 
