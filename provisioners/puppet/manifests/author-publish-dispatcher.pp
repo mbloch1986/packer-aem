@@ -20,6 +20,12 @@ if $::config::base::install_cloudwatchlogs {
   config::cloudwatchlogs_httpd { 'Setup CloudWatch for Dispatcher': }
 }
 
+if $::config::base::install_kinesis_agent {
+  config::kinesis_agent { 'Setup AWS Kinesis agent':
+    kinesis_agent_user_group => $::config::os_group
+  }
+}
+
 include aem_curator::install_dispatcher
 
 if $::config::base::install_collectd {

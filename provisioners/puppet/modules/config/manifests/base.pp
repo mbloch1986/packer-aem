@@ -85,6 +85,7 @@ class config::base (
   $install_collectd = true,
   $install_amazon_ssm_agent = true,
   $install_cloudwatch_metric_agent = true,
+  $install_kinesis_agent = false,
   $metric_root_disk_path = '',
   $metric_data_disk_path = '',
   $collectd_cloudwatch_source_url = 'https://github.com/awslabs/collectd-cloudwatch/archive/master.tar.gz',

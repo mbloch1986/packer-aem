@@ -26,3 +26,9 @@ if $::config::base::install_cloudwatch_metric_agent {
     ]
   }
 }
+
+if $::config::kinesis_agent::install {
+  config::kinesis_agent { 'Setup AWS Kinesis agent':
+    kinesis_agent_user_group => $::config::os_group
+  }
+}

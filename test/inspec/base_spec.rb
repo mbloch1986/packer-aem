@@ -13,8 +13,13 @@ install_aws_cli ||= 'true'
 install_cloudwatchlogs = @hiera.lookup('config::base::install_cloudwatchlogs', nil, @scope)
 install_cloudwatchlogs ||= 'true'
 
+install_kinesis_agent = @hiera.lookup('config::base::install_kinesis_agent', nil, @scope)
+install_kinesis_agent ||= 'false'
+
 os_group = @hiera.lookup('config::os_group', nil, @scope)
 os_group ||= 'shinesolutions'
+
+aws_kinesis_agent_user = 'aws-kinesis-agent-user'
 
 # install_aws_agents = @hiera.lookup('config::base::install_aws_agents', nil, @scope)
 # install_aws_agents ||= 'true'
@@ -111,6 +116,27 @@ packages = [
 packages.each do |pkg|
   describe package(pkg) do
     it { should be_installed }
+  end
+end
+
+if install_kinesis_agent == true
+
+  packages = [
+    'geronimo-jms',
+    'javamail',
+    'log4j',
+    'aws-kinesis-agent'
+  ]
+
+  packages.each do |pkg|
+    describe package(pkg) do
+      it { should be_installed }
+    end
+  end
+
+  describe user(aws_kinesis_agent_user) do
+    it { should exist }
+    its('groups') { should eq ['aws-kinesis-agent-user', os_group] }
   end
 end
 
