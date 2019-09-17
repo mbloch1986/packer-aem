@@ -13,6 +13,9 @@ install_aws_cli ||= 'true'
 install_cloudwatchlogs = @hiera.lookup('config::base::install_cloudwatchlogs', nil, @scope)
 install_cloudwatchlogs ||= 'true'
 
+os_group = @hiera.lookup('config::os_group', nil, @scope)
+os_group ||= 'shinesolutions'
+
 # install_aws_agents = @hiera.lookup('config::base::install_aws_agents', nil, @scope)
 # install_aws_agents ||= 'true'
 
@@ -109,4 +112,8 @@ packages.each do |pkg|
   describe package(pkg) do
     it { should be_installed }
   end
+end
+
+describe group(os_group) do
+  it { should exist }
 end

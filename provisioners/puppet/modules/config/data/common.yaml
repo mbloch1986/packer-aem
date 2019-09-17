@@ -1,4 +1,6 @@
 ---
+config::os_group: shinesolutions
+
 config::base::python_package: python
 config::base::python_pip_package: python-pip
 config::base::python_cheetah_package: python-cheetah

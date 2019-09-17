@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add creation of new os group `shinesolutions`
+
 ## 4.11.1 - 2019-09-12
 
 ### Fixed

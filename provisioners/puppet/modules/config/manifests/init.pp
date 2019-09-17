@@ -15,12 +15,18 @@
 #
 class config (
   $package_manager_packages = {},
+  $os_group                 = 'shinesolutions',
 ) {
   # Ensure we have a working FQDN <=> IP mapping.
   host { $facts['fqdn']:
     ensure       => present,
     ip           => $facts['ipaddress'],
     host_aliases => $facts['hostname'],
+  }
+
+  # Create os group
+  group { $os_group:
+    ensure => 'present'
   }
 
   $package_manager_packages.each | Integer $index, $package_details| {
