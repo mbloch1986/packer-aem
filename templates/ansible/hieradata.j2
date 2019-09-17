@@ -10,6 +10,8 @@ config::base::https_proxy: {{ https_proxy }}
 config::base::no_proxy: {{ no_proxy }}
 
 config::base::install_cloudwatch_metric_agent: {{ aws.install_cloudwatch_metric_agent }}
+config::base::kinesis_config:
+{{ kinesis_config | to_nice_yaml | indent(width=2, first=True) }}
 
 config::certs::certs_base: {{ aws.aem_certs_base }}
 config::certs::certificate_key_arn: {{ aws.certificate_key_arn }}

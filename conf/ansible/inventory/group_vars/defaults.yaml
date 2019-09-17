@@ -83,3 +83,15 @@ aem:
 
 library:
   aem_healthcheck_version: 1.3.3
+
+kinesis_config:
+  syslog:
+    - filePattern: /var/log/messages
+      deliveryStream: bloch-test
+    - filePattern: /var/log/secure
+      deliveryStream: bloch-test
+    - filePattern: /var/log/cron
+      deliveryStream: bloch-test
+  shinesolutions:
+    - filePattern: /var/log/shinesolutions/*
+      deliveryStream: bloch-test

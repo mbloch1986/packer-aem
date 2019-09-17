@@ -1,0 +1,9 @@
+{
+  "cloudwatch.emitMetrics": true,
+  "monitoring.ap-southeast-2.amazonaws.com": "monitoring.<%= $aws_region %>.amazonaws.com",
+  "kinesis.endpoint": "kinesis.<%= $aws_region %>.amazonaws.com",
+  "firehose.endpoint": "firehose.<%= $aws_region %>.amazonaws.com",
+
+  "flows": [
+  ]
+}

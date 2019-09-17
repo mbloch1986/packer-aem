@@ -18,6 +18,7 @@ if $::config::base::install_cloudwatch_metric_agent {
 
 if $::config::base::install_kinesis_agent {
   config::kinesis_agent { 'Setup AWS Kinesis agent':
-    kinesis_agent_user_group => $::config::os_group
+    kinesis_agent_user_group => $::config::os_group,
+    kinesis_config           => $::config::base::kinesis_config
   }
 }
