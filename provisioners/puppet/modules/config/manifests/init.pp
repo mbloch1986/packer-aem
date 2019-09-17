@@ -78,6 +78,29 @@ class config (
     notify => Exec['reload rsyslog with custom shinesolution config'],
   }
 
+  exec { "Update group owner for /var/log to ${os_group}":
+    command => "chgrp -R ${os_group} /var/log",
+    require => [
+                  Group[$os_group],
+                  File['/etc/rsyslog.d/shinesolutions.config']
+               ]
+  }
+
+  exec { 'Update group permissions to rx for dir /var/log':
+    command => "chmod g+rx /var/log",
+    require => [
+                  Group[$os_group],
+                  File['/etc/rsyslog.d/shinesolutions.config']
+               ]
+  }
+
+  exec { 'Update group permissions to r for everything in /var/log':
+    command => "chmod -R g+r /var/log",
+    require => [
+                  Exec['Update group permissions to rx for dir /var/log']
+               ]
+  }
+
   exec { 'reload rsyslog with custom shinesolution config':
     command     => '/bin/pkill -HUP rsyslogd',
     refreshonly => true,

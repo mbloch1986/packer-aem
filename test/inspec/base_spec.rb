@@ -149,3 +149,9 @@ describe file('/etc/rsyslog.d/shinesolutions.config') do
   it { should be_file }
   its('content') { should match(/#{os_group}/m) }
 end
+
+describe file('/var/log') do
+  it { should exist }
+  it { should be_directory }
+  its('group') { should eq os_group }
+end
