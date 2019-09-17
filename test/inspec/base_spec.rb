@@ -117,3 +117,9 @@ end
 describe group(os_group) do
   it { should exist }
 end
+
+describe file('/etc/rsyslog.d/shinesolutions.config') do
+  it { should exist }
+  it { should be_file }
+  its('content') { should match(/#{os_group}/m) }
+end

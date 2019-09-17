@@ -1,0 +1,5 @@
+$DirGroup <%= $rsyslog_group %>
+$FileGroup <%= $rsyslog_group %>
+$umask 0000
+$DirCreateMode 0750
+$FileCreateMode 0640

@@ -17,6 +17,14 @@ class config (
   $package_manager_packages = {},
   $os_group                 = 'shinesolutions',
 ) {
+
+  Exec {
+    cwd     => $tmp_dir,
+    path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+    timeout => 0,
+  }
+
+
   # Ensure we have a working FQDN <=> IP mapping.
   host { $facts['fqdn']:
     ensure       => present,
@@ -53,5 +61,25 @@ class config (
         ensure   => $package_version,
       }
     }
+  }
+  # Copy rsyslog configuration file to configure
+  file { '/etc/rsyslog.d/shinesolutions.config':
+    ensure  => present,
+    mode    => '0640',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      'config/rsyslog/shinesolutions.conf.epp',
+      {
+        'rsyslog_group' => $os_group
+      }
+    ),
+    require => Group[$os_group],
+    notify => Exec['reload rsyslog with custom shinesolution config'],
+  }
+
+  exec { 'reload rsyslog with custom shinesolution config':
+    command     => '/bin/pkill -HUP rsyslogd',
+    refreshonly => true,
   }
 }
