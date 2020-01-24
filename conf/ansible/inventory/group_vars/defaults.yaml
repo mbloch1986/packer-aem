@@ -37,6 +37,8 @@ aws:
   install_cloudwatch_metric_agent: false
   root_volume_size: 30
   data_volume_size: 75
+  enable_ebs_volume_encryption: true
+  kms_key_id: overwrite-me
   tags:
     - Key: overwrite-me
       Value: overwrite-me

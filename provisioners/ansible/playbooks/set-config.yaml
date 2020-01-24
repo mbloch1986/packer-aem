@@ -32,3 +32,19 @@
         tags: "{{ aws['tags'] }}"
       when:
         platform_type == "aws"
+
+    - name: Add KMS Key ID to ami_block_device_mappings in Packer template files
+      packer_template:
+        template_dir: "../../../templates/packer/{{ platform_type }}/"
+        packer_key: ami_block_device_mappings
+        add_key: "kms_key_id"
+        add_value: "{{ aws.kms_key_id }}"
+      when: aws.kms_key_id is defined and aws.kms_key_id != 'overwrite-me'
+
+    - name: Add KMS Key ID to launch_block_device_mappings in Packer template files
+      packer_template:
+        template_dir: "../../../templates/packer/{{ platform_type }}/"
+        packer_key: launch_block_device_mappings
+        add_key: "kms_key_id"
+        add_value: "{{ aws.kms_key_id }}"
+      when: aws.kms_key_id is defined and aws.kms_key_id != 'overwrite-me'
