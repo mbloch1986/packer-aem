@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Lock down boto3 to 1.10.35
+
 ## 5.1.0 - 2021-02-11
 ### Added
 - Add aws.install_rng_tools configuration for optimising entropy on instance types which use NVMe
